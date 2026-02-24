@@ -4,10 +4,10 @@ This Odoo 19 module modifies the default behavior of the `pos_discount` module i
 
 ## Features
 
-- **Fixed Amount Input**: The global discount button asks for a dollar amount (or other currency) instead of a percentage.
-- **Auto-Percentage Calculation**: Automatically calculates the equivalent percentage based on the order total without tax: `(Fixed Amount / Total Order Amount) * 100`.
-- **Native Compatibility**: Passes the calculated percentage to the native Odoo `apply_discount` function, ensuring that receipts and order lines still display the discount as a percentage (e.g., "5.00%").
-- **Safety Checks**: Prevents division by zero or applying discounts on orders with zero or negative totals.
+- **Flexible Discount Options**: The global "Discount" button now prompts the cashier to choose between **Percentage (%)** and **Fixed Amount**.
+- **Fixed Amount Conversion**: When a fixed amount is entered, the module automatically calculates the equivalent percentage based on the order total without tax: `(Fixed Amount / Total Order Amount) * 100`.
+- **Native Compatibility**: Regardless of the input type, the final discount is applied via Odoo's native `apply_discount` function. This ensures that receipts, order lines, and accounting reports correctly display the discount as a percentage.
+- **Safety Checks**: Includes validation to prevent division by zero or applying discounts on orders with zero or negative totals.
 
 ## Installation
 
