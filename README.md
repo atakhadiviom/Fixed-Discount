@@ -1,13 +1,13 @@
-# POS Fixed Discount for Odoo 19
+# POS Fixed Discount
 
-This Odoo 19 module modifies the default behavior of the `pos_discount` module in the Point of Sale. Instead of asking for a percentage, the global "Discount" button now prompts the cashier to enter a **Fixed Amount**.
+This Odoo module enhances the default behavior of the `pos_discount` module in the Point of Sale. The global "Discount" button prompts the cashier to choose between a **Percentage (%)** discount and a **Fixed Amount** discount.
 
 ## Features
 
-- **Flexible Discount Options**: The global "Discount" button now prompts the cashier to choose between **Percentage (%)** and **Fixed Amount**.
+- **Flexible Discount Options**: The global "Discount" button prompts the cashier to choose between **Percentage (%)** and **Fixed Amount**.
 - **Fixed Amount Conversion**: When a fixed amount is entered, the module automatically calculates the equivalent percentage based on the order total without tax: `(Fixed Amount / Total Order Amount) * 100`.
-- **Native Compatibility**: Regardless of the input type, the final discount is applied via Odoo's native `apply_discount` function. This ensures that receipts, order lines, and accounting reports correctly display the discount as a percentage.
-- **Safety Checks**: Includes validation to prevent division by zero or applying discounts on orders with zero or negative totals.
+- **Native Compatibility**: The final discount is applied via Odoo's native `apply_discount` function, ensuring receipt lines, tax groups, and accounting reports behave consistently.
+- **Safety Checks**: Validates order total against zero or negative values, prevents fixed discounts exceeding the order total without tax, and clamps percentage discounts between 0% and 100%.
 
 ## Installation
 
@@ -20,14 +20,14 @@ This Odoo 19 module modifies the default behavior of the `pos_discount` module i
 
 - **Module Name**: `pos_fixed_discount`
 - **Dependencies**: `point_of_sale`, `pos_discount`
-- **Frontend Framework**: Owl (Odoo 19)
-- **Patching Strategy**: Uses the `patch` utility to override the `onClick` method of `DiscountButton`.
+- **Frontend Framework**: Owl
+- **Patching Strategy**: Uses the `patch` utility to override the `click` method of `DiscountButton` (`@pos_discount/overrides/components/discount_button/discount_button`).
 
 ## How it works
 
 When the cashier clicks the "Discount" button:
-1. A popup appears asking for a "Discount Amount".
-2. The code calculates the percentage: `pc = (amount / total_without_tax) * 100`.
-3. The calculated percentage `pc` is applied to the order.
-
-This ensures that while the user enters a fixed value, Odoo's underlying engine handles it as a standard percentage discount for reporting and accounting purposes.
+1. An active order check ensures a valid order is in progress.
+2. A selection popup prompts the cashier to choose **Percentage (%)** or **Fixed Amount**.
+3. A number popup prompts for the discount value (defaults to configured `discount_pc` for percentage).
+4. If **Percentage**: value is clamped between 0% and 100% and applied directly.
+5. If **Fixed Amount**: validates order total without tax > 0 and amount <= total, computes `pc = (amount / total_without_tax) * 100`, and applies it via `apply_discount`.
