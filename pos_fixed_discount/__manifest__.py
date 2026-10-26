@@ -1,8 +1,10 @@
 {
     'name': 'POS Fixed Discount',
-    'version': '1.0',
+    'version': '17.0.1.0.0',
     'category': 'Sales/Point of Sale',
-    'summary': 'Modify POS Discount button to ask for a fixed amount instead of a percentage.',
+    'summary': 'Modify POS Discount button to ask for a fixed amount or percentage.',
+    'author': 'SynthoERP',
+    'website': 'https://atakhadivi.com',
     'depends': ['point_of_sale', 'pos_discount'],
     'data': [],
     'assets': {
